@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "169349224594",
+    "project_id": "social-media-app-12cd3",
+    "storage_bucket": "social-media-app-12cd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169349224594:android:931d38c073ef97b8252e4b",
+        "android_client_info": {
+          "package_name": "com.example.padc_firebase_tutorial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169349224594-p2u65eumdsdse3g6egnpdbeuvuioh2ei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx9CM6AYhaQaGVZKC9xcDyc6_XYeu9i34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169349224594-p2u65eumdsdse3g6egnpdbeuvuioh2ei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

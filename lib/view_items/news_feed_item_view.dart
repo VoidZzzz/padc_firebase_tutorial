@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:padc_firebase_tutorial/data/vos/news_feed_vo.dart';
 
 import '../resources/dimens.dart';
 import '../resources/images.dart';
 
 class NewsFeedItemView extends StatelessWidget {
-  const NewsFeedItemView({Key? key}) : super(key: key);
+  const NewsFeedItemView({Key? key, required this.newsfeed}) : super(key: key);
+
+  final NewsfeedVO? newsfeed;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,7 @@ class NewsFeedItemView extends StatelessWidget {
       children: [
         Row(
           children: [
-            ProfileImageView(),
+            ProfileImageView(image: '',),
             SizedBox(
               width: MARGIN_MEDIUM_2,
             ),
@@ -119,14 +122,15 @@ class MoreButtonView extends StatelessWidget {
 
 class ProfileImageView extends StatelessWidget {
   const ProfileImageView({
-    Key? key,
+    Key? key, required this.image
   }) : super(key: key);
+
+  final String image;
 
   @override
   Widget build(BuildContext context) {
-    return const CircleAvatar(
-      backgroundImage: NetworkImage(
-        "https://www.whatsappprofiledpimages.com/wp-content/uploads/2021/08/Profile-Photo-Wallpaper.jpg",
+    return CircleAvatar(
+      backgroundImage: NetworkImage(image,
       ),
       radius: MARGIN_LARGE,
     );
