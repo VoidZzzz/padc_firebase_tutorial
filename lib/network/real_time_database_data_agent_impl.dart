@@ -33,4 +33,9 @@ class RealTimeDatabaseDataAgentImpl extends SocialAppDataAgent {
       }
     });
   }
+
+  @override
+  Future<void> addNewPost(NewsfeedVO newPost) {
+    return databaseRef.child(newsfeedPath).child(newPost.id.toString()).set(newPost.toJson());
+  }
 }

@@ -12,10 +12,13 @@ class NewsFeedItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            ProfileImageView(image: newsfeed?.profilePicture ?? "",),
+            ProfileImageView(
+              image: newsfeed?.profilePicture ?? "",
+            ),
             const SizedBox(
               width: MARGIN_MEDIUM_2,
             ),
@@ -27,7 +30,9 @@ class NewsFeedItemView extends StatelessWidget {
         const SizedBox(
           height: MARGIN_MEDIUM_2,
         ),
-        PostImageView(postImg: newsfeed?.postImage ?? "",),
+        PostImageView(
+          postImg: newsfeed?.postImage ?? "",
+        ),
         const SizedBox(
           height: MARGIN_MEDIUM_2,
         ),
@@ -63,9 +68,8 @@ class NewsFeedItemView extends StatelessWidget {
 }
 
 class PostDescriptionView extends StatelessWidget {
-  const PostDescriptionView({
-    Key? key, required this.description
-  }) : super(key: key);
+  const PostDescriptionView({Key? key, required this.description})
+      : super(key: key);
 
   final String description;
 
@@ -82,28 +86,28 @@ class PostDescriptionView extends StatelessWidget {
 }
 
 class PostImageView extends StatelessWidget {
-  const PostImageView({
-    Key? key,required this.postImg
-  }) : super(key: key);
+  const PostImageView({Key? key, required this.postImg}) : super(key: key);
 
   final String postImg;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(MARGIN_CARD_MEDIUM_2),
-      child: FadeInImage(
-        height: 200,
-        width: double.infinity,
-        placeholder: NetworkImage(
-          NETWORK_IMAGE_POST_PLACEHOLDER,
-        ),
-        image: NetworkImage(
-          postImg,
-        ),
-        fit: BoxFit.fill,
-      ),
-    );
+    return (postImg == "")
+        ? Container()
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(MARGIN_CARD_MEDIUM_2),
+            child: FadeInImage(
+              height: 200,
+              width: double.infinity,
+              placeholder: const NetworkImage(
+                NETWORK_IMAGE_POST_PLACEHOLDER,
+              ),
+              image: NetworkImage(
+                postImg,
+              ),
+              fit: BoxFit.fill,
+            ),
+          );
   }
 }
 
@@ -125,16 +129,15 @@ class MoreButtonView extends StatelessWidget {
 }
 
 class ProfileImageView extends StatelessWidget {
-  const ProfileImageView({
-    Key? key, required this.image
-  }) : super(key: key);
+  const ProfileImageView({Key? key, required this.image}) : super(key: key);
 
   final String image;
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundImage: NetworkImage(image,
+      backgroundImage: NetworkImage(
+        image,
       ),
       radius: MARGIN_LARGE,
     );
@@ -142,9 +145,8 @@ class ProfileImageView extends StatelessWidget {
 }
 
 class NameLocationAndTimeAgoView extends StatelessWidget {
-  const NameLocationAndTimeAgoView({
-    Key? key, required this.name
-  }) : super(key: key);
+  const NameLocationAndTimeAgoView({Key? key, required this.name})
+      : super(key: key);
 
   final String name;
 
@@ -155,7 +157,8 @@ class NameLocationAndTimeAgoView extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(name,
+            Text(
+              name,
               style: const TextStyle(
                 fontSize: TEXT_REGULAR_2X,
                 color: Colors.black,

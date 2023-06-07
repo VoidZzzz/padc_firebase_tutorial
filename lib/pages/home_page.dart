@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../blocs/newsfeed_bloc.dart';
 import '../resources/dimens.dart';
 import '../view_items/news_feed_item_view.dart';
+import 'add_new_post_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -69,6 +70,16 @@ class HomePage extends StatelessWidget {
               itemCount: bloc.newsfeedLists?.length ?? 0,
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const AddNewPostPage(),
+              ),
+            );
+          },
+          child: const Icon(Icons.add),
         ),
       ),
     );
