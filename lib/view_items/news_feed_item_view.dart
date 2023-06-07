@@ -11,31 +11,31 @@ class NewsFeedItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         Row(
           children: [
-            ProfileImageView(image: '',),
-            SizedBox(
+            ProfileImageView(image: newsfeed?.profilePicture ?? "",),
+            const SizedBox(
               width: MARGIN_MEDIUM_2,
             ),
-            NameLocationAndTimeAgoView(),
-            Spacer(),
-            MoreButtonView(),
+            NameLocationAndTimeAgoView(name: newsfeed?.userName ?? ''),
+            const Spacer(),
+            const MoreButtonView(),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: MARGIN_MEDIUM_2,
         ),
-        PostImageView(),
-        SizedBox(
+        PostImageView(postImg: newsfeed?.postImage ?? "",),
+        const SizedBox(
           height: MARGIN_MEDIUM_2,
         ),
-        PostDescriptionView(),
-        SizedBox(
+        PostDescriptionView(description: newsfeed?.description ?? ""),
+        const SizedBox(
           height: MARGIN_MEDIUM_2,
         ),
-        Row(
+        const Row(
           children: [
             Text(
               "See Comments",
@@ -64,13 +64,15 @@ class NewsFeedItemView extends StatelessWidget {
 
 class PostDescriptionView extends StatelessWidget {
   const PostDescriptionView({
-    Key? key,
+    Key? key, required this.description
   }) : super(key: key);
+
+  final String description;
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      "You're bound to find the perfect beach caption to complement the stunning landscapes, golden hour selfies, and silly group photos filling your camera roll. Joke lovers will scream \"shell yeah!\"",
+    return Text(
+      description,
       style: TextStyle(
         fontSize: TEXT_REGULAR,
         color: Colors.black,
@@ -81,21 +83,23 @@ class PostDescriptionView extends StatelessWidget {
 
 class PostImageView extends StatelessWidget {
   const PostImageView({
-    Key? key,
+    Key? key,required this.postImg
   }) : super(key: key);
+
+  final String postImg;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(MARGIN_CARD_MEDIUM_2),
-      child: const FadeInImage(
+      child: FadeInImage(
         height: 200,
         width: double.infinity,
         placeholder: NetworkImage(
           NETWORK_IMAGE_POST_PLACEHOLDER,
         ),
         image: NetworkImage(
-          "https://images.unsplash.com/photo-1591266360949-c54e3296de4c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2VhJTIwdmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+          postImg,
         ),
         fit: BoxFit.fill,
       ),
@@ -139,28 +143,29 @@ class ProfileImageView extends StatelessWidget {
 
 class NameLocationAndTimeAgoView extends StatelessWidget {
   const NameLocationAndTimeAgoView({
-    Key? key,
+    Key? key, required this.name
   }) : super(key: key);
+
+  final String name;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text(
-              "Emma Brody",
-              style: TextStyle(
+            Text(name,
+              style: const TextStyle(
                 fontSize: TEXT_REGULAR_2X,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: MARGIN_SMALL,
             ),
-            Text(
+            const Text(
               "- 2 hours ago",
               style: TextStyle(
                 fontSize: TEXT_SMALL,
@@ -170,10 +175,10 @@ class NameLocationAndTimeAgoView extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: MARGIN_MEDIUM,
         ),
-        Text(
+        const Text(
           "Paris",
           style: TextStyle(
             fontSize: TEXT_SMALL,

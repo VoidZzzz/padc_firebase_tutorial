@@ -1,4 +1,3 @@
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:padc_firebase_tutorial/data/vos/news_feed_vo.dart';
 import 'package:padc_firebase_tutorial/network/social_app_data_agent.dart';
@@ -22,15 +21,16 @@ class RealTimeDatabaseDataAgentImpl extends SocialAppDataAgent {
   @override
   Stream<List<NewsfeedVO>> getNewsfeed() {
     return databaseRef.child(newsfeedPath).onValue.map((event) {
-      Map<Object?, Object?> objMap = event.snapshot.value as Map<Object?, Object?>;
-      Map<String?, dynamic> convertedMap = {};
-      objMap.forEach((key, value) {
-        convertedMap[key.toString()] = value;
-      });
-
-      return (convertedMap.values).map<NewsfeedVO>((e) {
-        return NewsfeedVO.fromJson(Map<String, dynamic>.from(e));
-      }).toList();
+      final dynamic value = event.snapshot.value;
+      if (value is Map<dynamic, dynamic>) {
+        return value.values
+            .map<NewsfeedVO>((element) =>
+                NewsfeedVO.fromJson(Map<String, dynamic>.from(element)))
+            .toList();
+      } else {
+        print("HiHi");
+        return [];
+      }
     });
   }
 }

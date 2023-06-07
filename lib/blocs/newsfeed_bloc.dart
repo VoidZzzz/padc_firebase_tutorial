@@ -11,8 +11,9 @@ class NewsfeedBloc extends ChangeNotifier{
   final SocialModel _model = SocialModelImpl();
 
   NewsfeedBloc(){
-    _model.getNewsfeed().listen((newsfeedList) {
-      newsfeedLists = newsfeedList;
+    _model.getNewsfeed().listen((list) {
+      newsfeedLists = list;
+      print(newsfeedLists?.first.userName);
       checkNotifyListener();
     });
   }

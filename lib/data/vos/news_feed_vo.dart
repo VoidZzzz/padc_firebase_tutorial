@@ -17,7 +17,7 @@ class NewsfeedVO{
   @JsonKey(name: "profile_picture")
   String? profilePicture;
 
-  @JsonKey(name: "user_name")
+  @JsonKey(name: "username")
   String? userName;
 
   NewsfeedVO(this.id, this.description, this.postImage, this.profilePicture,
@@ -26,4 +26,9 @@ class NewsfeedVO{
   factory NewsfeedVO.fromJson(Map<String, dynamic> json) => _$NewsfeedVOFromJson(json);
 
   Map<String, dynamic> toJson() => _$NewsfeedVOToJson(this);
+
+  @override
+  String toString() {
+    return 'NewsfeedVO{id: $id, description: $description, postImage: $postImage, profilePicture: $profilePicture, userName: $userName}';
+  }
 }
