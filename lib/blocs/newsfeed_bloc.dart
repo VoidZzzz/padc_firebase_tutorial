@@ -18,6 +18,10 @@ class NewsfeedBloc extends ChangeNotifier{
     });
   }
 
+  void onTapDeletePost(int postId)async{
+    await _model.deletePost(postId);
+  }
+
   void checkNotifyListener(){
     if(!isDisposed){
       notifyListeners();

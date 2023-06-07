@@ -38,4 +38,9 @@ class RealTimeDatabaseDataAgentImpl extends SocialAppDataAgent {
   Future<void> addNewPost(NewsfeedVO newPost) {
     return databaseRef.child(newsfeedPath).child(newPost.id.toString()).set(newPost.toJson());
   }
+
+  @override
+  Future<void> deletePost(int postId) {
+    return databaseRef.child(newsfeedPath).child(postId.toString()).remove();
+  }
 }

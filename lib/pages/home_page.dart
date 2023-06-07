@@ -60,6 +60,8 @@ class HomePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return NewsFeedItemView(
                   newsfeed: bloc.newsfeedLists?[index],
+                  onTapDelete: (postId) => bloc.onTapDeletePost(postId),
+                  onTapEdit: (postId) {},
                 );
               },
               separatorBuilder: (context, index) {

@@ -5,9 +5,16 @@ import '../resources/dimens.dart';
 import '../resources/images.dart';
 
 class NewsFeedItemView extends StatelessWidget {
-  const NewsFeedItemView({Key? key, required this.newsfeed}) : super(key: key);
+  const NewsFeedItemView(
+      {Key? key,
+      required this.onTapEdit,
+      required this.onTapDelete,
+      required this.newsfeed})
+      : super(key: key);
 
   final NewsfeedVO? newsfeed;
+  final Function(int postId) onTapEdit;
+  final Function(int postId) onTapDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,10 @@ class NewsFeedItemView extends StatelessWidget {
             ),
             NameLocationAndTimeAgoView(name: newsfeed?.userName ?? ''),
             const Spacer(),
-            const MoreButtonView(),
+            MoreButtonView(
+              onTapDelete: () => onTapDelete(newsfeed!.id!),
+              onTapEdit: () {},
+            ),
           ],
         ),
         const SizedBox(
@@ -77,7 +87,7 @@ class PostDescriptionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       description,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: TEXT_REGULAR,
         color: Colors.black,
       ),
@@ -112,14 +122,28 @@ class PostImageView extends StatelessWidget {
 }
 
 class MoreButtonView extends StatelessWidget {
-  const MoreButtonView({
-    Key? key,
-  }) : super(key: key);
+  const MoreButtonView(
+      {Key? key, required this.onTapDelete, required this.onTapEdit})
+      : super(key: key);
+
+  final Function onTapEdit;
+  final Function onTapDelete;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
+    return PopupMenuButton(
+      itemBuilder: (BuildContext context) => [
+        PopupMenuItem(
+          value: 1,
+          onTap: () => onTapEdit(),
+          child: const Text("Edit"),
+        ),
+        PopupMenuItem(
+          value: 2,
+          onTap: () => onTapDelete(),
+          child: const Text("Delete"),
+        ),
+      ],
       child: const Icon(
         Icons.more_vert,
         color: Colors.grey,
