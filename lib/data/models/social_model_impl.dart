@@ -35,4 +35,14 @@ class SocialModelImpl extends SocialModel {
   Future<void> deletePost(int postId) {
     return dataAgent.deletePost(postId);
   }
+
+  @override
+  Stream<NewsfeedVO> getNewsfeedById(int postId) {
+    return dataAgent.getNewsfeedById(postId);
+  }
+
+  @override
+  Future<void> editPost(NewsfeedVO newPost) {
+    return dataAgent.addNewPost(newPost);
+  }
 }

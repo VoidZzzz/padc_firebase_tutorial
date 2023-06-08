@@ -7,12 +7,14 @@ import 'package:padc_firebase_tutorial/view_items/width_box.dart';
 import 'package:provider/provider.dart';
 
 class AddNewPostPage extends StatelessWidget {
-  const AddNewPostPage({Key? key}) : super(key: key);
+  const AddNewPostPage({Key? key,this.postId}) : super(key: key);
+
+  final int? postId;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => AddNewPostBloc(),
+      create: (context) => AddNewPostBloc(postId),
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -38,32 +40,11 @@ class AddNewPostPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const HeightBox(height: 20),
-                Row(
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Image.network(
-                        "https://img.freepik.com/premium-vector/simple-powerful-black-white-logo-featuring-stylish-man-minimalist-style-with-clean-lines-simple-effective-design_567294-4343.jpg",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const WidthBox(width: 20),
-                    const TextView(
-                      text: "ZT",
-                      fontSize: 20,
-                    ),
-                  ],
-                ),
+                ProfileImageAndNameView(),
                 const HeightBox(height: 20),
                 const PostFieldView(),
                 const HeightBox(height: 5),
-                ErrorTextView(),
+                const ErrorTextView(),
                 const HeightBox(height: 20),
                 Consumer<AddNewPostBloc>(
                   builder: (context, bloc, child) => PostButtonView(
@@ -78,6 +59,40 @@ class AddNewPostPage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ProfileImageAndNameView extends StatelessWidget {
+  const ProfileImageAndNameView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AddNewPostBloc>(
+      builder: (context, bloc, child) => Row(
+        children: [
+          Container(
+            height: 50,
+            width: 50,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Image.network(
+              bloc.profilePicture,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const WidthBox(width: 20),
+          TextView(
+            text: bloc.userName,
+            fontSize: 20,
+          ),
+        ],
       ),
     );
   }
@@ -119,6 +134,7 @@ class PostFieldView extends StatelessWidget {
           border: Border.all(width: 1, color: Colors.grey),
         ),
         child: TextField(
+          controller: TextEditingController(text: bloc.postDescription),
           style: const TextStyle(color: Colors.black),
           cursorColor: Colors.grey,
           maxLines: 15,
@@ -135,7 +151,8 @@ class PostFieldView extends StatelessWidget {
                 const OutlineInputBorder(borderSide: BorderSide.none),
           ),
           onChanged: (text) {
-            bloc.onDescriptionChanged(text);
+            bloc.postDescription = text;
+            // bloc.onDescriptionChanged(text); //<= not working
           },
         ),
       ),

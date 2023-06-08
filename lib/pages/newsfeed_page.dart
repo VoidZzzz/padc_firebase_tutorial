@@ -6,8 +6,8 @@ import '../resources/dimens.dart';
 import '../view_items/news_feed_item_view.dart';
 import 'add_new_post_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class NewsfeedPage extends StatelessWidget {
+  const NewsfeedPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,11 @@ class HomePage extends StatelessWidget {
                 return NewsFeedItemView(
                   newsfeed: bloc.newsfeedLists?[index],
                   onTapDelete: (postId) => bloc.onTapDeletePost(postId),
-                  onTapEdit: (postId) {},
+                  onTapEdit: (postId) {
+                    Future.delayed(const Duration(milliseconds: 1000)).then(
+                      (value) => _navigateToEditPostPage(context, postId),
+                    );
+                  },
                 );
               },
               separatorBuilder: (context, index) {
@@ -75,14 +79,26 @@ class HomePage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const AddNewPostPage(),
-              ),
-            );
+            _navigateToAddNewPostPage(context);
           },
           child: const Icon(Icons.add),
         ),
+      ),
+    );
+  }
+
+  void _navigateToAddNewPostPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const AddNewPostPage(),
+      ),
+    );
+  }
+
+  Future<dynamic> _navigateToEditPostPage(BuildContext context, int postId) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AddNewPostPage(postId: postId),
       ),
     );
   }

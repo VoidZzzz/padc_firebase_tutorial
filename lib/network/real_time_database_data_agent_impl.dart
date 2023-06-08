@@ -36,11 +36,31 @@ class RealTimeDatabaseDataAgentImpl extends SocialAppDataAgent {
 
   @override
   Future<void> addNewPost(NewsfeedVO newPost) {
-    return databaseRef.child(newsfeedPath).child(newPost.id.toString()).set(newPost.toJson());
+    return databaseRef
+        .child(newsfeedPath)
+        .child(newPost.id.toString())
+        .set(newPost.toJson());
   }
 
   @override
   Future<void> deletePost(int postId) {
     return databaseRef.child(newsfeedPath).child(postId.toString()).remove();
+  }
+
+  @override
+  Stream<NewsfeedVO> getNewsfeedById(int newsfeedId) {
+    return databaseRef
+        .child(newsfeedPath)
+        .child(newsfeedId.toString())
+        .once()
+        .asStream()
+        .map((snapShot) {
+      final dynamic value = snapShot.snapshot.value;
+      if (value != null) {
+        return NewsfeedVO.fromJson(Map<String, dynamic>.from(value));
+      } else {
+        throw Exception("Data not found");
+      }
+    });
   }
 }

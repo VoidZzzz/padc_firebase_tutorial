@@ -32,8 +32,13 @@ class NewsFeedItemView extends StatelessWidget {
             NameLocationAndTimeAgoView(name: newsfeed?.userName ?? ''),
             const Spacer(),
             MoreButtonView(
-              onTapDelete: () => onTapDelete(newsfeed!.id!),
-              onTapEdit: () {},
+              onTapDelete: () {
+                onTapDelete(newsfeed!.id!);
+              },
+              onTapEdit: () {
+                onTapEdit(newsfeed!.id!);
+                print(newsfeed!.id!);
+              },
             ),
           ],
         ),
