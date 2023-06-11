@@ -1,3 +1,5 @@
+
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:padc_firebase_tutorial/data/models/social_model.dart';
 import 'package:padc_firebase_tutorial/data/models/social_model_impl.dart';
@@ -14,6 +16,9 @@ class AddNewPostBloc extends ChangeNotifier {
   String profilePicture = '';
   NewsfeedVO? mNewsfeedVO;
 
+  // Image
+  File? chosenImageFile;
+
   final SocialModel model = SocialModelImpl();
 
   AddNewPostBloc(int? postId){
@@ -26,6 +31,18 @@ class AddNewPostBloc extends ChangeNotifier {
       _prepopulateDataForAddNewPost();
       checkNotifyListener();
     }
+  }
+
+
+
+  void onImageChosen(File imageFile) {
+    chosenImageFile = imageFile;
+    checkNotifyListener();
+  }
+
+  void onTapDeleteImage() {
+    chosenImageFile = null;
+    checkNotifyListener();
   }
 
   void _prepopulateDataForEditPost(int postId){

@@ -1,4 +1,7 @@
+
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:padc_firebase_tutorial/blocs/add_new_post_bloc.dart';
 import 'package:padc_firebase_tutorial/view_items/height_box.dart';
 import 'package:padc_firebase_tutorial/view_items/icon_view.dart';
@@ -6,8 +9,10 @@ import 'package:padc_firebase_tutorial/view_items/text_view.dart';
 import 'package:padc_firebase_tutorial/view_items/width_box.dart';
 import 'package:provider/provider.dart';
 
+import '../resources/dimens.dart';
+
 class AddNewPostPage extends StatelessWidget {
-  const AddNewPostPage({Key? key,this.postId}) : super(key: key);
+  const AddNewPostPage({Key? key, this.postId}) : super(key: key);
 
   final int? postId;
 
@@ -46,6 +51,8 @@ class AddNewPostPage extends StatelessWidget {
                 const HeightBox(height: 5),
                 const ErrorTextView(),
                 const HeightBox(height: 20),
+                PostImageView(),
+                const HeightBox(height: 20),
                 Consumer<AddNewPostBloc>(
                   builder: (context, bloc, child) => PostButtonView(
                     onTap: () {
@@ -58,6 +65,69 @@ class AddNewPostPage extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class PostImageView extends StatelessWidget {
+  const PostImageView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AddNewPostBloc>(
+      builder: (context, bloc, child) => Container(
+        padding: const EdgeInsets.all(MARGIN_MEDIUM),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(MARGIN_MEDIUM),
+          border: Border.all(color: Colors.black, width: 1),
+        ),
+        child: Stack(
+          children: [
+            Container(
+              child: (bloc.chosenImageFile == null)
+                  ? GestureDetector(
+                      child: SizedBox(
+                        height: 300,
+                        child: Image.network(
+                          "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640",
+                        ),
+                      ),
+                      onTap: () async {
+                        final ImagePicker _picker = ImagePicker();
+                        // Pick an image
+                        final XFile? image = await _picker.pickImage(
+                            source: ImageSource.gallery);
+                        if (image != null) {
+                          bloc.onImageChosen(File(image.path));
+                        }
+                      },
+                    )
+                  : SizedBox(
+                      height: 300,
+                      child: Image.file(
+                        bloc.chosenImageFile ?? File(""),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Visibility(
+                visible: bloc.chosenImageFile != null,
+                child: GestureDetector(
+                  onTap: () {
+                    bloc.onTapDeleteImage();
+                  },
+                  child: const Icon(
+                    Icons.delete_rounded,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -105,15 +175,16 @@ class ErrorTextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddNewPostBloc>(builder: (context, bloc, widget) => Visibility(
-      visible: bloc.isNewPostError,
-      child: const TextView(
-        text: "Error: Field cannot be empty",
-        color: Colors.red,
-        fontSize: 10,
-        fontWeight: FontWeight.normal,
+    return Consumer<AddNewPostBloc>(
+      builder: (context, bloc, widget) => Visibility(
+        visible: bloc.isNewPostError,
+        child: const TextView(
+          text: "Error: Field cannot be empty",
+          color: Colors.red,
+          fontSize: 10,
+          fontWeight: FontWeight.normal,
+        ),
       ),
-    ),
     );
   }
 }

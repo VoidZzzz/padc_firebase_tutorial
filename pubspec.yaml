@@ -37,6 +37,8 @@ dependencies:
   json_serializable: ^6.7.0
   json_annotation: ^4.8.1
   cloud_firestore: ^4.8.0
+  image_picker: ^0.8.8
+
 
 
   # The following adds the Cupertino Icons font to your application.
