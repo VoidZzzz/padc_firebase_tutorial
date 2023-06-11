@@ -1,5 +1,6 @@
 import 'package:padc_firebase_tutorial/data/models/social_model.dart';
 import 'package:padc_firebase_tutorial/data/vos/news_feed_vo.dart';
+import 'package:padc_firebase_tutorial/network/cloud_firestore_data_agent_impl.dart';
 import 'package:padc_firebase_tutorial/network/real_time_database_data_agent_impl.dart';
 import 'package:padc_firebase_tutorial/network/social_app_data_agent.dart';
 
@@ -12,7 +13,11 @@ class SocialModelImpl extends SocialModel {
 
   SocialModelImpl._internal();
 
-  SocialAppDataAgent dataAgent = RealTimeDatabaseDataAgentImpl();
+  /// RealTime
+  // SocialAppDataAgent dataAgent = RealTimeDatabaseDataAgentImpl();
+
+  SocialAppDataAgent dataAgent = CloudFirestoreDataAgentImpl();
+
 
   @override
   Stream<List<NewsfeedVO>> getNewsfeed() {
