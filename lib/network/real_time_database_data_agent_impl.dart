@@ -29,7 +29,9 @@ class RealTimeDatabaseDataAgentImpl extends SocialAppDataAgent {
             .toList();
       } else {
         print("HiHi");
-        return [];
+        return [
+          //
+        ];
       }
     });
   }
