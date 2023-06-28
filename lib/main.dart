@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:padc_firebase_tutorial/pages/log_in_page.dart';
 import 'package:padc_firebase_tutorial/pages/newsfeed_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(backgroundColor: Colors.white, elevation: 0.0),
           primarySwatch: Colors.blue,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
-      home: const NewsfeedPage(),
+      home: const LogInPage(),
     );
   }
 }
